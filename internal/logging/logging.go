@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/JerkyTreats/{{MODULE_NAME}}/internal/config"
+	"{{MODULE_NAME}}/internal/config"
 	"go.uber.org/zap"
 )
 

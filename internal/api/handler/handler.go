@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"github.com/JerkyTreats/template-goapi/internal/api/types"
-	"github.com/JerkyTreats/template-goapi/internal/logging"
+	"{{MODULE_NAME}}/internal/api/types"
+	"{{MODULE_NAME}}/internal/logging"
 )
 
 // HandlerRegistry manages all HTTP handlers for the application

@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"sync"
 
-	"github.com/JerkyTreats/template-goapi/internal/logging"
+	"{{MODULE_NAME}}/internal/logging"
 )
 
 // RouteInfo contains metadata for API route registration and documentation generation

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/JerkyTreats/template-goapi/internal/logging"
+	"{{MODULE_NAME}}/internal/logging"
 )
 
 // HealthResponse represents the JSON response for health checks
