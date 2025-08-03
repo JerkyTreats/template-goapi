@@ -1,4 +1,4 @@
-module github.com/jerkytreats/goapi-template
+module {{MODULE_NAME}}
 
 go 1.24.3
 

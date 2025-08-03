@@ -1,4 +1,4 @@
-// Package logging provides centralized logging for PHITE using uber-go/zap.
+// Package logging provides centralized logging for {{PROJECT_NAME}} using uber-go/zap.
 // All code must use this package for logging.
 package logging
 
@@ -7,7 +7,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/jerkytreats/goapi-template/internal/config"
 	"go.uber.org/zap"
 )
 
