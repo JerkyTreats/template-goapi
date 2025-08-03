@@ -1,4 +1,4 @@
-// Package logging provides centralized logging for {{PROJECT_NAME}} using uber-go/zap.
+// Package logging provides centralized logging for TEMPLATE_GOAPI using uber-go/zap.
 // All code must use this package for logging.
 package logging
 
@@ -7,6 +7,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/JerkyTreats/{{MODULE_NAME}}/internal/config"
 	"go.uber.org/zap"
 )
 
