@@ -37,7 +37,7 @@ func RegisterRoute(route RouteInfo) {
 }
 
 // GetRegisteredRoutes returns a copy of all registered routes
-// This is used by the handler registry
+// This is used by the OpenAPI generator and handler registry
 func GetRegisteredRoutes() []RouteInfo {
 	registryMutex.RLock()
 	defer registryMutex.RUnlock()

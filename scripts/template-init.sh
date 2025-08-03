@@ -67,6 +67,39 @@ echo "📛 Project name: $PROJECT_NAME"
 CONFIG_DIR=".$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')"
 echo "📁 Config directory: $CONFIG_DIR"
 
+# Prompt for additional template variables
+echo ""
+echo "🔧 Additional configuration needed for OpenAPI and Docker:"
+echo ""
+
+# API Title
+read -p "📝 Enter API title for documentation (e.g., 'My API'): " API_TITLE
+if [[ -z "$API_TITLE" ]]; then
+    API_TITLE="$REPO_NAME API"
+    echo "   Using default: $API_TITLE"
+fi
+
+# API Base URL
+read -p "🌐 Enter production API base URL (e.g., 'https://api.example.com'): " API_BASE_URL
+if [[ -z "$API_BASE_URL" ]]; then
+    API_BASE_URL="https://api.example.com"
+    echo "   Using default: $API_BASE_URL"
+fi
+
+# Docker Username
+read -p "🐳 Enter Docker Hub username: " DOCKER_USERNAME
+if [[ -z "$DOCKER_USERNAME" ]]; then
+    DOCKER_USERNAME="username"
+    echo "   Using placeholder: $DOCKER_USERNAME"
+fi
+
+# Docker Image Name
+read -p "📦 Enter Docker image name (e.g., '$REPO_NAME'): " DOCKER_IMAGE_NAME
+if [[ -z "$DOCKER_IMAGE_NAME" ]]; then
+    DOCKER_IMAGE_NAME="$REPO_NAME"
+    echo "   Using default: $DOCKER_IMAGE_NAME"
+fi
+
 echo ""
 echo "🔄 Replacing template variables in all files..."
 
@@ -82,15 +115,19 @@ find . -type f \
     -not -name "template-init.sh" \
     | while read -r file; do
     
-    # Check if file contains any template variables
-    if grep -l "{{MODULE_NAME}}\|{{PROJECT_NAME}}\|{{CONFIG_DIR}}" "$file" > /dev/null 2>&1; then
+    # Check if file contains any of our template variables (exclude GitHub Actions and Docker metadata patterns)
+    if grep -l "{{MODULE_NAME}}\|{{PROJECT_NAME}}\|{{CONFIG_DIR}}\|{{API_TITLE}}\|{{API_BASE_URL}}\|{{DOCKER_USERNAME}}\|{{DOCKER_IMAGE_NAME}}" "$file" > /dev/null 2>&1; then
         echo "  📝 Processing: $file"
         
-        # Use sed to replace template variables
+        # Use sed to replace only our template variables (not GitHub Actions or Docker metadata patterns)
         sed -i.bak \
             -e "s|{{MODULE_NAME}}|$MODULE_NAME|g" \
             -e "s|{{PROJECT_NAME}}|$PROJECT_NAME|g" \
             -e "s|{{CONFIG_DIR}}|$CONFIG_DIR|g" \
+            -e "s|{{API_TITLE}}|$API_TITLE|g" \
+            -e "s|{{API_BASE_URL}}|$API_BASE_URL|g" \
+            -e "s|{{DOCKER_USERNAME}}|$DOCKER_USERNAME|g" \
+            -e "s|{{DOCKER_IMAGE_NAME}}|$DOCKER_IMAGE_NAME|g" \
             "$file"
         
         # Remove backup file
@@ -106,10 +143,18 @@ echo "   Repository: $REPO_NAME"
 echo "   Module: $MODULE_NAME" 
 echo "   Project: $PROJECT_NAME"
 echo "   Config dir: ~/$CONFIG_DIR"
+echo "   API Title: $API_TITLE"
+echo "   API Base URL: $API_BASE_URL"
+echo "   Docker User: $DOCKER_USERNAME"
+echo "   Docker Image: $DOCKER_IMAGE_NAME"
 echo ""
 echo "🚀 Next steps:"
 echo "   1. Run: go mod tidy"
 echo "   2. Run: go run cmd/server/main.go"
 echo "   3. Test: curl http://localhost:8080/health"
+echo "   4. Generate docs: go run cmd/generate-openapi/main.go"
+echo ""
+echo "🐳 Docker setup:"
+echo "   Set GitHub secrets: DOCKER_USERNAME, DOCKER_PASSWORD"
 echo ""
 echo "🗑️  You can now delete this script: rm scripts/template-init.sh"
